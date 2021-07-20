@@ -17,8 +17,8 @@ func (t *Tree) preorder() {
 }
 func (t *Tree) postorder(){
 	if t != nil {
-		t.Left.preorder()
-		t.Right.preorder()
+		t.Left.postorder()
+		t.Right.postorder()
 		fmt.Printf("%v", t.Val)
 	}
 }
