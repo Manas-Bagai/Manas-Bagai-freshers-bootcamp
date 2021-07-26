@@ -7,13 +7,13 @@ import (
 
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
-	grp1 := r.Group("/user-api")
+	grp1 := r.Group("/student-api")
 	{
-		grp1.GET("user", Controllers.GetUsers)
-		grp1.POST("user", Controllers.CreateUser)
-		grp1.GET("user/:id", Controllers.GetUserByID)
-		grp1.PUT("user/:id", Controllers.UpdateUser)
-		grp1.DELETE("user/:id", Controllers.DeleteUser)
+		grp1.GET("student", Controllers.GetStudents)
+		grp1.POST("student", Controllers.CreateStudent)
+		grp1.GET("student/:id", Controllers.GetStudentByID)
+		grp1.PUT("student/:id", Controllers.UpdateStudent)
+		grp1.DELETE("student/:id", Controllers.DeleteStudent)
 	}
 	return r
 }

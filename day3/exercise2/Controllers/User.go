@@ -7,59 +7,58 @@ import (
 	"net/http"
 )
 
-func GetUsers(c *gin.Context){
+func GetStudents(c *gin.Context){
 	var user []Models.User
-	err:= Models.GetAllUsers(&user)
+	err:= Models.GetAllStudents(&user)
 	if err!=nil{
-		c.AbortWithStatus(http.StatusNotFound)
+		fmt.Println(err.Error())
 	} else{
 		c.JSON(http.StatusOK,user)
 	}
 }
 
-func CreateUser(c *gin.Context){
+func CreateStudent(c *gin.Context){
 	var user Models.User
 	c.BindJSON(&user)
-	err:= Models.CreateUser(&user)
+	err:= Models.CreateStudent(&user)
 	if err!=nil{
 		fmt.Println(err.Error())
-		c.AbortWithStatus(http.StatusNotFound)
 	} else {
 		c.JSON(http.StatusOK,user)
 	}
 }
 
-func GetUserByID(c *gin.Context){
+func GetStudentByID(c *gin.Context){
 	id:= c.Params.ByName("id")
 	var user Models.User
-	err:= Models.GetUserByID(&user,id)
+	err:= Models.GetStudentByID(&user,id)
 	if err!= nil{
-		c.AbortWithStatus(http.StatusNotFound)
+		fmt.Println(err.Error())
 	}else {
 		c.JSON(http.StatusOK,user)
 	}
 }
 
-func UpdateUser(c *gin.Context){
+func UpdateStudent(c *gin.Context){
 	id:= c.Params.ByName("id")
 	var user Models.User
-	err:=Models.GetUserByID(&user,id)
+	err:=Models.GetStudentByID(&user,id)
 	if err!=nil{
-		c.AbortWithStatus(http.StatusNotFound)
+		fmt.Println(err.Error())
 	}
 	c.BindJSON(&user)
-	err= Models.UpdateUser(&user,id)
+	err= Models.UpdateStudent(&user,id)
 	if err!= nil{
-		c.AbortWithStatus(http.StatusNotFound)
+		fmt.Println(err.Error())
 	}else {
 		c.JSON(http.StatusOK,user)
 	}
 }
 
-func DeleteUser(c *gin.Context){
+func DeleteStudent(c *gin.Context){
 	id:= c.Params.ByName("id")
 	var user Models.User
-	err:= Models.DeleteUser(&user,id)
+	err:= Models.DeleteStudent(&user,id)
 	if err!= nil{
 		c.AbortWithStatus(http.StatusNotFound)
 	}else {

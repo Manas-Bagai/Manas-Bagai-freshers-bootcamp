@@ -10,13 +10,8 @@ type User struct {
 	Marks int `json:"marks"`
 }
 
-type Subjects struct{
-	Subject string `json:"subject"`
-	Marks int `json:"marks"`
-}
-
 func (b *User) TableName() string{
-	return "user"
+	return "students"
 }
 
 //func (c *Subjects) TableSubjects() string{
