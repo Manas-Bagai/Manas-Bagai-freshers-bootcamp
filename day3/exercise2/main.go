@@ -5,7 +5,7 @@ import (
 	"exercise2/Models"
 	"exercise2/Routes"
 	"fmt"
-	_"github.com/go-sql-driver/mysql"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 )
 
@@ -22,5 +22,7 @@ func main(){
 	Config.DB.AutoMigrate(&Models.User{})
 
 	r:= Routes.SetupRouter()
+
 	r.Run()
+
 }
