@@ -83,7 +83,7 @@ func PlaceOrder(c *gin.Context){
 	var order Models.Order
 	err:=Service.PlaceOrder(c,&order)
 	if err!=nil{
-		c.AbortWithStatus(http.StatusNotFound)
+		c.JSON(http.StatusAccepted,order)
 	}else {
 		c.JSON(http.StatusOK,order)
 	}

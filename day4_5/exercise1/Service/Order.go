@@ -6,11 +6,13 @@ import (
 	"exercise1/Models"
 	"github.com/gin-gonic/gin"
 	"sync"
+	"time"
 )
 
 func PlaceOrder(c *gin.Context, order *Models.Order)error{
 	var product1 Models.Product
-	//var customer Models.Customer
+	var customer Models.Customer
+
 	c.BindJSON(order)
 
 	quant:=order.Quantity
@@ -19,6 +21,7 @@ func PlaceOrder(c *gin.Context, order *Models.Order)error{
 	}
 	stock := product1.Quantity
 	if quant>stock{
+		order.Status="Out of stock"
 		return errors.New("out of stock")
 	}
 
@@ -26,10 +29,18 @@ func PlaceOrder(c *gin.Context, order *Models.Order)error{
 
 	Config.DB.Save(product1)
 
-	//err:=GetCustomerByID(c,&customer)
-	//if err!=nil{
-	//	return err
-	//}
+	customerId :=order.CustomerId
+	if err := Config.DB.Where("id = ?", customerId).Last(&customer).Error; err != nil {
+		order.Status="Customer Not Found"
+		return err
+	}
+	t1:=customer.Time.Add(200*time.Second)
+	if time.Now().Before(t1){
+		order.Status="Cool Down"
+		return errors.New("Cool Down")
+	}else{
+		customer.Time=time.Now()
+	}
 	mu:=sync.Mutex{}
 	mu.Lock()
 	if err := Config.DB.Create(order).Error; err != nil {

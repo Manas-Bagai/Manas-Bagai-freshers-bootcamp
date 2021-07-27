@@ -1,5 +1,7 @@
 package Models
 
+import "time"
+
 type Product struct {
 	//gorm2.Model
 	Id int `json:"id" gorm:"primary_key"`
@@ -15,6 +17,7 @@ type Customer struct{
 	CustomerName string `json:"customer_name"`
 	CustomerAddress string `json:"customer_address"`
 	CustomerNumber string `json:"customer_number"`
+	Time time.Time `gorm:"default:current_timestamp"`
 }
 
 type Order struct {
